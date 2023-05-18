@@ -55,3 +55,7 @@ Route::prefix('admin')->group(function () {
     // })->whereAlpha('name');
   })->whereAlphaNumeric('name');
 });
+
+Route::fallback(function () {
+  return "<h1>Sorry, the page does not exist</h1>";
+});
