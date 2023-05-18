@@ -14,22 +14,33 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-  return view('welcome');
+  $html = "
+    <h1>Contact APP</h1>
+    <div>
+      <a href='" . route('contacts.index') . "'>All Contacts</a>
+      <a href='" . route('contacts.create') . "'>Add Contact</a>
+      <a href='" . route('contacts.show', 1) . "'>Show contact</a>
+    </div>
+  ";
+
+  return $html;
+
+  // return view('welcome');
 });
 
 Route::get('/contacts', function () {
   return "<h1>All contacts</h1>";
-});
+})->name('contacts.index');
 
 Route::get('/contacts/create', function () {
   return "<h1>Add new contact</h1>";
-});
+})->name('contacts.create');
 
 // Динамический роут
 Route::get('/contacts/{id}', function ($id) {
   return "<h1>Contact " . $id . " </h1>";
   // })->where('id', '[0-9]+');
-})->whereNumber('id');
+})->whereNumber('id')->name('contacts.show');
 
 // Динамический роут с ОПЦИОНАЛЬНЫМ параметром
 Route::get('/companies/{name?}', function ($name = null) {
