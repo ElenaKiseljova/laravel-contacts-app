@@ -28,7 +28,8 @@ Route::get('/contacts/create', function () {
 // Динамический роут
 Route::get('/contacts/{id}', function ($id) {
   return "<h1>Contact " . $id . " </h1>";
-});
+  // })->where('id', '[0-9]+');
+})->whereNumber('id');
 
 // Динамический роут с ОПЦИОНАЛЬНЫМ параметром
 Route::get('/companies/{name?}', function ($name = null) {
@@ -37,5 +38,6 @@ Route::get('/companies/{name?}', function ($name = null) {
   } else {
     return "<h1>All Companies</h1>";
   }
-});
-
+  // })->where('name', '[a-zA-Z]+');
+  // })->whereAlpha('name');
+})->whereAlphaNumeric('name');
