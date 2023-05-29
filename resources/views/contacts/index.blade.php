@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Contact App | All contacts')
+
 @section('content')
   <main class="py-5">
     <div class="container">
@@ -49,7 +51,7 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First Name</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Email</th>
                     <th scope="col">Company</th>
