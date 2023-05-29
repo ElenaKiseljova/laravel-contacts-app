@@ -17,7 +17,12 @@
   <h1>All Contacts</h1>
   <div>
     <a href='{{ route('contacts.create') }}'>Add Contact</a>
-    <a href='{{ route('contacts.show', 1) }}'>Show contact</a>
+
+    @foreach ($contacts as $id => $contact)
+      <p>
+        {{ $contact['name'] }} | {{ $contact['phone'] }} | <a href='{{ route('contacts.show', $id) }}'>Show</a>
+      </p>
+    @endforeach
   </div>
 </body>
 
