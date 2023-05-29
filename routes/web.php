@@ -14,18 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-  $html = "
-    <h1>Contact APP</h1>
-    <div>
-      <a href='" . route('contacts.index') . "'>All Contacts</a>
-      <a href='" . route('contacts.create') . "'>Add Contact</a>
-      <a href='" . route('contacts.show', 1) . "'>Show contact</a>
-    </div>
-  ";
-
-  return $html;
-
-  // return view('welcome');
+  return view('welcome');
 });
 
 // Route::prefix('admin')->name('admin.')->group(function () {
@@ -56,6 +45,6 @@ Route::prefix('admin')->group(function () {
   })->whereAlphaNumeric('name');
 });
 
-Route::fallback(function () {
-  return "<h1>Sorry, the page does not exist</h1>";
-});
+// Route::fallback(function () {
+//   return "<h1>Sorry, the page does not exist</h1>";
+// });
