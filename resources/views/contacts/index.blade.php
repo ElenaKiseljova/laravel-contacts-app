@@ -33,7 +33,35 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($contacts as $id => $contact)
+                  {{-- @if (count($contacts))
+                    @foreach ($contacts as $id => $contact)
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>{{ $contact['name'] }}</td>
+                        <td>{{ $contact['phone'] }}</td>
+                        <td>alfred@test.com</td>
+                        <td>Company one</td>
+                        <td width="150">
+                          <a href="{{ route('contacts.show', $id) }}" class="btn btn-sm btn-circle btn-outline-info"
+                            title="Show"><i class="fa fa-eye"></i></a>
+                          <a href="form.html" class="btn btn-sm btn-circle btn-outline-secondary" title="Edit"><i
+                              class="fa fa-edit"></i></a>
+                          <a href="#" class="btn btn-sm btn-circle btn-outline-danger" title="Delete"
+                            onclick="confirm('Are you sure?')"><i class="fa fa-times"></i></a>
+                        </td>
+                      </tr>
+                    @endforeach
+                  @elseif (count($contacts === 1))
+                    <tr>
+                      <td>There's only one contacts</td>
+                    </tr>
+                  @else
+                    <tr>
+                      <td>No contacts found</td>
+                    </tr>
+                  @endif --}}
+
+                  @forelse ($contacts as $id => $contact)
                     <tr>
                       <th scope="row">1</th>
                       <td>{{ $contact['name'] }}</td>
@@ -49,7 +77,11 @@
                           onclick="confirm('Are you sure?')"><i class="fa fa-times"></i></a>
                       </td>
                     </tr>
-                  @endforeach
+                  @empty
+                    <tr>
+                      <td colspan="6">No contacts found</td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
 

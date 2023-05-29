@@ -34,7 +34,7 @@ Route::get('/contacts', function () {
     3 => ['name' => 'Company Three', 'contacts' => 4]
   ];
 
-  $contacts = getContacts();
+  $contacts = []; // getContacts();
 
   return view('contacts.index', compact('contacts', 'companies'));
 })->name('contacts.index');
