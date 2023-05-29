@@ -13,17 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-  return view('welcome');
-});
-
-Route::get('/contacts', function () {
-  $contacts = [
+function getContacts()
+{
+  return [
     1 => ['name' => 'Name 1', 'phone' => '123456789'],
     2 => ['name' => 'Name 1', 'phone' => '123456789'],
     3 => ['name' => 'Name 1', 'phone' => '123456789'],
     4 => ['name' => 'Name 1', 'phone' => '123456789'],
   ];
+}
+
+Route::get('/', function () {
+  return view('welcome');
+});
+
+Route::get('/contacts', function () {
+  $contacts = getContacts();
 
   // return view('contacts.index', ['contacts' => $contacts]);
   return view('contacts.index', compact('contacts'));
@@ -35,7 +40,10 @@ Route::get('/contacts/create', function () {
 
 // Динамический роут
 Route::get('/contacts/{id}', function ($id) {
-  return "<h1>Contact " . $id . " </h1>";
+  $contacts = getContacts();
+  $contact = $contacts[$id];
+
+  return view('contacts.show')->with('contact', $contact); // ->with('companies', $companies);
   // })->where('id', '[0-9]+');
 })->whereNumber('id')->name('contacts.show');
 
