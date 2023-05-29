@@ -41,6 +41,10 @@ Route::get('/contacts/create', function () {
 // Динамический роут
 Route::get('/contacts/{id}', function ($id) {
   $contacts = getContacts();
+
+  // abort_if(!isset($contacts[$id]), 404);
+  abort_unless(isset($contacts[$id]), 404);
+
   $contact = $contacts[$id];
 
   return view('contacts.show')->with('contact', $contact); // ->with('companies', $companies);
