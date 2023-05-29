@@ -14,9 +14,8 @@
 </head>
 
 <body>
-  <h1>Contact APP</h1>
+  <h1>All Contacts</h1>
   <div>
-    <a href='{{ route('contacts.index') }}'>All Contacts</a>
     <a href='{{ route('contacts.create') }}'>Add Contact</a>
     <a href='{{ route('contacts.show', 1) }}'>Show contact</a>
   </div>
