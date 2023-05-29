@@ -28,10 +28,15 @@ Route::get('/', function () {
 });
 
 Route::get('/contacts', function () {
+  $companies = [
+    1 => ['name' => 'Company One', 'contacts' => 3],
+    2 => ['name' => 'Company Two', 'contacts' => 1],
+    3 => ['name' => 'Company Three', 'contacts' => 4]
+  ];
+
   $contacts = getContacts();
 
-  // return view('contacts.index', ['contacts' => $contacts]);
-  return view('contacts.index', compact('contacts'));
+  return view('contacts.index', compact('contacts', 'companies'));
 })->name('contacts.index');
 
 Route::get('/contacts/create', function () {
@@ -42,13 +47,11 @@ Route::get('/contacts/create', function () {
 Route::get('/contacts/{id}', function ($id) {
   $contacts = getContacts();
 
-  // abort_if(!isset($contacts[$id]), 404);
   abort_unless(isset($contacts[$id]), 404);
 
   $contact = $contacts[$id];
 
-  return view('contacts.show')->with('contact', $contact); // ->with('companies', $companies);
-  // })->where('id', '[0-9]+');
+  return view('contacts.show')->with('contact', $contact);
 })->whereNumber('id')->name('contacts.show');
 
 // Динамический роут с ОПЦИОНАЛЬНЫМ параметром
@@ -58,6 +61,4 @@ Route::get('/companies/{name?}', function ($name = null) {
   } else {
     return "<h1>All Companies</h1>";
   }
-  // })->where('name', '[a-zA-Z]+');
-  // })->whereAlpha('name');
 })->whereAlphaNumeric('name');
