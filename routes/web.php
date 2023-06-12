@@ -18,13 +18,13 @@ Route::get('/', function () {
   return view('welcome');
 });
 
-Route::controller(ContactController::class)->group(function () {
-  Route::get('/contacts', 'index')->name('contacts.index');
+Route::controller(ContactController::class)->name('contacts.')->group(function () {
+  Route::get('/contacts', 'index')->name('index');
 
-  Route::get('/contacts/create', 'create')->name('contacts.create');
+  Route::get('/contacts/create', 'create')->name('create');
 
   // Динамический роут
-  Route::get('/contacts/{id}', 'show')->whereNumber('id')->name('contacts.show');
+  Route::get('/contacts/{id}', 'show')->whereNumber('id')->name('show');
 });
 
 // Динамический роут с ОПЦИОНАЛЬНЫМ параметром
