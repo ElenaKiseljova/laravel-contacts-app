@@ -6,7 +6,6 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\WelcomeController;
-use Illuminate\Console\View\Components\Task;
 use Illuminate\Support\Facades\Route;
 
 /*
