@@ -18,12 +18,14 @@ Route::get('/', function () {
   return view('welcome');
 });
 
-Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
+Route::controller(ContactController::class)->group(function () {
+  Route::get('/contacts', 'index')->name('contacts.index');
 
-Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
+  Route::get('/contacts/create', 'create')->name('contacts.create');
 
-// Динамический роут
-Route::get('/contacts/{id}', [ContactController::class, 'show'])->whereNumber('id')->name('contacts.show');
+  // Динамический роут
+  Route::get('/contacts/{id}', 'show')->whereNumber('id')->name('contacts.show');
+});
 
 // Динамический роут с ОПЦИОНАЛЬНЫМ параметром
 Route::get('/companies/{name?}', function ($name = null) {
