@@ -50,8 +50,15 @@ Route::resources([
 // Route::resource('/activities', ActivityController::class)->only([
 //   'create', 'store', 'edit',  'update', 'destroy'
 // ]);
-Route::resource('/activities', ActivityController::class)->except([
-  'create', 'store', 'edit',  'update', 'destroy'
+// Route::resource('/activities', ActivityController::class)->except([
+//   'create', 'store', 'edit',  'update', 'destroy'
+// ]);
+// Route::resource('/activities', ActivityController::class)->names([
+//   'index' => 'activities.all',
+//   'show' => 'activities.view'
+// ]);
+Route::resource('/activities', ActivityController::class)->parameters([
+  'activities' => 'active',
 ]);
 
 // Route::resource('/contacts.notes', ContactNoteController::class);
