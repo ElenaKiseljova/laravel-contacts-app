@@ -19,4 +19,12 @@ class Company extends Model
     'address',
     'website'
   ];
+
+  public function contacts()
+  {
+    return $this->hasMany(
+      Contact::class,
+      // 'company_id'
+    );
+  }
 }
