@@ -11,4 +11,12 @@ class Company extends Model
 
   // protected $table = 'app_companies';
   // protected $primaryKey = '_id';
+
+  // protected $guarded = [];
+  protected $fillable = [
+    'name',
+    'email',
+    'address',
+    'website'
+  ];
 }
