@@ -43,7 +43,7 @@ class ContactController extends Controller
     // $companies = $this->company->pluck();
 
     // $contacts = $this->getContacts();
-    $contacts = Contact::latest()->get();
+    $contacts = Contact::latest()->paginate(10);
 
     return view('contacts.index', compact('contacts', 'companies'));
   }
