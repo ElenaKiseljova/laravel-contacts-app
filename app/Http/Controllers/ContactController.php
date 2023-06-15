@@ -36,14 +36,21 @@ class ContactController extends Controller
   public function store(Request $request)
   {
     dd(
-      request()->path(),
-      request()->is('contacts*'),
-      request()->routeIs('contacts.*'),
-      request()->url(),
-      request()->fullUrl(),
-      request()->method(),
-      request()->isMethod('get'),
-      request()->ip(),
+      // request()->path(),
+      // request()->is('contacts*'),
+      // request()->routeIs('contacts.*'),
+      // request()->url(),
+      // request()->fullUrl(),
+      // request()->method(),
+      // request()->isMethod('get'),
+      // request()->ip(),
+      request()->input(),
+      request()->query(),
+      request()->all(),
+      request()->collect(),
+      request()->only('first_name', 'last_name'),
+      request()->except('first_name'),
+      request()->first_name,
     );
   }
 
