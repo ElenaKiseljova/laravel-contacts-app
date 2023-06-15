@@ -19,7 +19,10 @@
             </div>
             <div class="card-body">
               @include('contacts._filter')
-              {{-- @include('contacts._filter', ['companies' => $companies]) --}}
+
+              @if ($message = session('message'))
+                <div class="alert alert-success">{{ $message }}</div>
+              @endif
 
               <table class="table-striped table-hover table">
                 <thead>

@@ -3,16 +3,12 @@
     <div class="form-group row">
       <label for="first_name" class="col-md-3 col-form-label">First Name</label>
       <div class="col-md-9">
-        {{-- <input type="text" name="first_name" value="{{ request()->old('first_name') }}" id="first_name"
-          class="form-control @error('first_name') is-invalid @enderror"> --}}
         <input type="text" name="first_name" value="{{ old('first_name') }}" id="first_name"
           class="form-control @error('first_name') is-invalid @enderror">
         @error('first_name')
           <div class="invalid-feedback">
             {{ $message }}
           </div>
-          {{-- @else
-          <span>Тут какой-то текст, если нет ошибки и если он вообще нужен здесь :)</span> --}}
         @enderror
       </div>
     </div>
@@ -73,7 +69,6 @@
         <select name="company_id" id="company_id" class="form-control @error('company_id') is-invalid @enderror">
           <option value="">Select Company</option>
           @foreach ($companies as $id => $name)
-            {{-- <option value="{{ $id }}" @if ($id == old('company_id')) selected @endif> --}}
             <option value="{{ $id }}" @selected($id == old('company_id'))>
               {{ $name }}
             </option>
