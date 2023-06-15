@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\CompanyRepository;
 use App\Models\Contact;
+use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
@@ -32,9 +33,18 @@ class ContactController extends Controller
     return view('contacts.create', compact('companies'));
   }
 
-  public function store()
+  public function store(Request $request)
   {
-    dd('Store');
+    dd(
+      request()->path(),
+      request()->is('contacts*'),
+      request()->routeIs('contacts.*'),
+      request()->url(),
+      request()->fullUrl(),
+      request()->method(),
+      request()->isMethod('get'),
+      request()->ip(),
+    );
   }
 
   public function show($id)
