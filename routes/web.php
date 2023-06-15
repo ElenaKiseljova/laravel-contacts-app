@@ -22,17 +22,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', WelcomeController::class);
 
-Route::controller(ContactController::class)->name('contacts.')->group(function () {
-  Route::get('/contacts', 'index')->name('index');
-  Route::post('/contacts', 'store')->name('store');
-  Route::get('/contacts/create', 'create')->name('create');
-  // Динамический роут
-  Route::get('/contacts/{id}', 'show')->whereNumber('id')->name('show');
-  Route::get('/contacts/{id}/edit', 'edit')->whereNumber('id')->name('edit');
-  Route::put('/contacts/{id}', 'update')->whereNumber('id')->name('update');
-  Route::delete('/contacts/{id}', 'destroy')->whereNumber('id')->name('destroy');
-});
-
 // Динамический роут с ОПЦИОНАЛЬНЫМ параметром
 Route::get('/companies/{name?}', function ($name = null) {
   if ($name) {
@@ -42,12 +31,9 @@ Route::get('/companies/{name?}', function ($name = null) {
   }
 })->whereAlphaNumeric('name');
 
-Route::resource('/companies', CompanyController::class);
+Route::resource('/contacts', ContactController::class);
 
-Route::resources([
-  '/tags' => TagController::class,
-  '/tasks' => TaskController::class
-]);
+Route::resource('/companies', CompanyController::class);
 
 // Route::resource('/activities', ActivityController::class)->only([
 //   'create', 'store', 'edit',  'update', 'destroy'
@@ -65,3 +51,8 @@ Route::resource('/activities', ActivityController::class)->parameters([
 
 // Route::resource('/contacts.notes', ContactNoteController::class);
 Route::resource('/contacts.notes', ContactNoteController::class)->shallow();
+
+Route::resources([
+  '/tags' => TagController::class,
+  '/tasks' => TaskController::class
+]);
