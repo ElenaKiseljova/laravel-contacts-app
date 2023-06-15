@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\CompanyRepository;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -17,11 +18,24 @@ class ContactController extends Controller
   {
     $companies = $this->company->pluck();
 
-    $contacts = Contact::latest()->where(function ($query) {
-      if ($company_id = request()->query('company_id')) {
-        $query->where('company_id', $company_id);
-      }
-    })->paginate(10);
+    // DB::enableQueryLog();
+
+    $contacts = Contact::latest()
+      ->where(function ($query) {
+        if ($company_id = request()->query('company_id')) {
+          $query->where('company_id', $company_id);
+        }
+      })
+      ->where(function ($query) {
+        if ($search = request()->query('search')) {
+          $query->where('first_name', 'like', "%{$search}%");
+          $query->orWhere('last_name', 'like', "%{$search}%");
+          $query->orWhere('email', 'like', "%{$search}%");
+        }
+      })
+      ->paginate(10);
+
+    // dump(DB::getQueryLog());
 
     return view('contacts.index', compact('contacts', 'companies'));
   }

@@ -35,21 +35,10 @@ Route::resource('/contacts', ContactController::class);
 
 Route::resource('/companies', CompanyController::class);
 
-// Route::resource('/activities', ActivityController::class)->only([
-//   'create', 'store', 'edit',  'update', 'destroy'
-// ]);
-// Route::resource('/activities', ActivityController::class)->except([
-//   'create', 'store', 'edit',  'update', 'destroy'
-// ]);
-// Route::resource('/activities', ActivityController::class)->names([
-//   'index' => 'activities.all',
-//   'show' => 'activities.view'
-// ]);
 Route::resource('/activities', ActivityController::class)->parameters([
   'activities' => 'active',
 ]);
 
-// Route::resource('/contacts.notes', ContactNoteController::class);
 Route::resource('/contacts.notes', ContactNoteController::class)->shallow();
 
 Route::resources([
