@@ -28,9 +28,10 @@ class ContactController extends Controller
 
   public function create()
   {
+    $contact = new Contact();
     $companies = $this->company->pluck();
 
-    return view('contacts.create', compact('companies'));
+    return view('contacts.create', compact('companies', 'contact'));
   }
 
   public function store(Request $request)
@@ -44,41 +45,8 @@ class ContactController extends Controller
       'company_id' => 'required|exists:companies,id',
     ]);
 
-    // dd(
-    // request()->path(),
-    // request()->is('contacts*'),
-    // request()->routeIs('contacts.*'),
-    // request()->url(),
-    // request()->fullUrl(),
-    // request()->method(),
-    // request()->isMethod('get'),
-    // request()->ip(),
-    // request()->input(),
-    // request()->query(),
-    // request()->all(),
-    // request()->collect(),
-    // request()->only('first_name', 'last_name'),
-    // request()->except('first_name'),
-    // request()->first_name,
-    // );
-
-    // Contact::create($request->only([
-    //   'first_name',
-    //   'last_name',
-    //   'phone',
-    //   'address',
-    //   'email',
-    //   'company_id'
-    // ]));
-    // $contact = Contact::create($request->input());
     Contact::create($request->input());
 
-    // return $contact;
-    // return response()->json([
-    //   'success' => true,
-    //   'data' => $contact
-    // ]);
-    // return redirect('contacts');
     return redirect()->route('contacts.index')->with('message', 'Contact has been added successfully');
   }
 
@@ -87,5 +55,31 @@ class ContactController extends Controller
     $contact = Contact::findOrFail($id);
 
     return view('contacts.show')->with('contact', $contact);
+  }
+
+  public function edit($id)
+  {
+    $contact = Contact::findOrFail($id);
+    $companies = $this->company->pluck();
+
+    return view('contacts.edit', compact('contact', 'companies'));
+  }
+
+  public function update(Request $request, $id)
+  {
+    $contact = Contact::findOrFail($id);
+
+    $request->validate([
+      'first_name' => 'required|string|max:50',
+      'last_name' => 'required|string|max:50',
+      'email' => 'required|email',
+      'phone' => 'nullable',
+      'address' => 'nullable',
+      'company_id' => 'required|exists:companies,id',
+    ]);
+
+    $contact->update($request->input());
+
+    return redirect()->route('contacts.index')->with('message', 'Contact has been updated successfully');
   }
 }

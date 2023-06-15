@@ -28,6 +28,8 @@ Route::controller(ContactController::class)->name('contacts.')->group(function (
   Route::get('/contacts/create', 'create')->name('create');
   // Динамический роут
   Route::get('/contacts/{id}', 'show')->whereNumber('id')->name('show');
+  Route::get('/contacts/{id}/edit', 'edit')->whereNumber('id')->name('edit');
+  Route::put('/contacts/{id}', 'update')->whereNumber('id')->name('update');
 });
 
 // Динамический роут с ОПЦИОНАЛЬНЫМ параметром
