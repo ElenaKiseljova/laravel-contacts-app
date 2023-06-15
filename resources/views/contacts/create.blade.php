@@ -14,6 +14,8 @@
             <div class="card-body">
               <form action="{{ route('contacts.store') }}" method="POST">
                 @include('contacts._form')
+                {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}" /> --}}
+                @csrf
               </form>
             </div>
           </div>
