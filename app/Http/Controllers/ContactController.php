@@ -35,6 +35,15 @@ class ContactController extends Controller
 
   public function store(Request $request)
   {
+    $request->validate([
+      'first_name' => 'required|string|max:50',
+      'last_name' => 'required|string|max:50',
+      'email' => 'required|email',
+      'phone' => 'nullable',
+      'address' => 'nullable',
+      'company_id' => 'required|exists:companies,id',
+    ]);
+
     dd(
       // request()->path(),
       // request()->is('contacts*'),
