@@ -26,12 +26,9 @@ class ContactController extends Controller
       $query->onlyTrashed();
     }
 
-    $contacts = $query->latest()
-      ->where(function ($query) {
-        if ($company_id = request()->query('company_id')) {
-          $query->where('company_id', $company_id);
-        }
-      })
+    $contacts = $query
+      ->sortByNameAlpha()
+      ->filterByCompany()
       ->where(function ($query) {
         if ($search = request()->query('search')) {
           $query->where('first_name', 'like', "%{$search}%");

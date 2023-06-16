@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\SimpleSoftDeletes;
-use App\Models\Scopes\SimpleSoftDeletingScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contact extends Model
 {
-  use HasFactory, SimpleSoftDeletes;
+  use HasFactory, SoftDeletes;
 
   // protected $guarded = [];
   protected $fillable = [
@@ -31,5 +29,19 @@ class Contact extends Model
   public function tasks()
   {
     return $this->hasMany(Task::class);
+  }
+
+  public function scopeSortByNameAlpha(Builder $query)
+  {
+    return $query->orderBy('first_name');
+  }
+
+  public function scopeFilterByCompany(Builder $query)
+  {
+    if ($company_id = request()->query('company_id')) {
+      $query->where('company_id', $company_id);
+    }
+
+    return $query;
   }
 }
