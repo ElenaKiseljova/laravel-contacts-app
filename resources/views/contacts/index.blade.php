@@ -44,9 +44,19 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
+                    <th scope="col">
+                      {!! sortable('First Name') !!}
+                    </th>
+                    <th scope="col">
+                      <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'first_name']) }}">
+                        {!! sortable('Last Name') !!}
+                      </a>
+                    </th>
+                    <th scope="col">
+                      <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'first_name']) }}">
+                        {!! sortable('Email') !!}
+                      </a>
+                    </th>
                     <th scope="col">Company</th>
                     <th scope="col">Actions</th>
                   </tr>
