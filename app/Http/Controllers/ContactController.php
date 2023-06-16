@@ -20,7 +20,13 @@ class ContactController extends Controller
 
     // DB::enableQueryLog();
 
-    $contacts = Contact::latest()
+    $query = Contact::query();
+
+    if (request()->query('trash')) {
+      $query->onlyTrashed();
+    }
+
+    $contacts = $query->latest()
       ->where(function ($query) {
         if ($company_id = request()->query('company_id')) {
           $query->where('company_id', $company_id);
