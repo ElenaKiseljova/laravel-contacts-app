@@ -59,8 +59,7 @@
                     <div class="col-md-9 offset-md-3">
                       <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-info">Edit</a>
 
-                      <form onsubmit="confirm('Are you sure?')" class="d-inline"
-                        action="{{ route('contacts.destroy', $contact->id) }}" method="POST">
+                      <form class="d-inline" action="{{ route('contacts.destroy', $contact->id) }}" method="POST">
                         @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-outline-danger" title="Delete">Delete</button>

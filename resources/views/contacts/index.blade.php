@@ -21,7 +21,18 @@
               @include('contacts._filter')
 
               @if ($message = session('message'))
-                <div class="alert alert-success">{{ $message }}</div>
+                <div class="alert alert-success">
+                  {{ $message }}
+
+                  @if ($undoRoute = session('undoRoute'))
+                    <form action="{{ $undoRoute }}" method="POST" class="d-inline">
+                      @csrf
+                      @method('delete')
+
+                      <button class="btn alert-link">Undo</button>
+                    </form>
+                  @endif
+                </div>
               @endif
 
               <table class="table-striped table-hover table">
@@ -41,12 +52,9 @@
                   @empty
                     @include('contacts._empty')
                   @endforelse
-
-                  {{-- @each('contacts._contact', $contacts, 'contact', 'contacts._empty') --}}
                 </tbody>
               </table>
 
-              {{-- {{ $contacts->appends(request()->only('orderBy', 'q'))->links() }} --}}
               {{ $contacts->withQueryString()->links() }}
             </div>
           </div>
