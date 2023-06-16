@@ -20,13 +20,7 @@ class ContactController extends Controller
 
     // DB::enableQueryLog();
 
-    $query = Contact::query();
-
-    if (request()->query('trash')) {
-      $query->onlyTrashed();
-    }
-
-    $contacts = $query
+    $contacts = Contact::allowedTrash()
       ->allowedSorts('first_name')
       ->allowedFilters('company_id')
       ->allowedSerch('first_name', 'last_name', 'email')

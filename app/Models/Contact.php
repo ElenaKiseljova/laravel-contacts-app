@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\AllowedFilterSearch;
+use App\Models\Scopes\AllowedSort;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contact extends Model
 {
-  use HasFactory, SoftDeletes;
+  use HasFactory, SoftDeletes, AllowedSort, AllowedFilterSearch;
 
   // protected $guarded = [];
   protected $fillable = [
@@ -29,32 +31,5 @@ class Contact extends Model
   public function tasks()
   {
     return $this->hasMany(Task::class);
-  }
-
-  public function scopeAllowedSorts(Builder $query, string $column)
-  {
-    return $query->orderBy($column);
-  }
-
-  public function scopeAllowedFilters(Builder $query, string $key)
-  {
-    if ($id = request()->query($key)) {
-      $query->where($key, $id);
-    }
-
-    return $query;
-  }
-
-  public function scopeAllowedSerch(Builder $query, ...$keys)
-  {
-    if ($search = request()->query('search')) {
-      foreach ($keys as $index => $key) {
-        $method = $index === 0 ? 'where' : 'orWhere';
-
-        $query->{$method}($key, 'like', "%{$search}%");
-      }
-    }
-
-    return $query;
   }
 }
