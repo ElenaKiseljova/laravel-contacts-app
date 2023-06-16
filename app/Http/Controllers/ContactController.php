@@ -27,15 +27,9 @@ class ContactController extends Controller
     }
 
     $contacts = $query
-      ->sortByNameAlpha()
-      ->filterByCompany()
-      ->where(function ($query) {
-        if ($search = request()->query('search')) {
-          $query->where('first_name', 'like', "%{$search}%");
-          $query->orWhere('last_name', 'like', "%{$search}%");
-          $query->orWhere('email', 'like', "%{$search}%");
-        }
-      })
+      ->allowedSorts('first_name')
+      ->allowedFilters('company_id')
+      ->allowedSerch('first_name', 'last_name', 'email')
       ->paginate(10);
 
     // dump(DB::getQueryLog());

@@ -31,15 +31,28 @@ class Contact extends Model
     return $this->hasMany(Task::class);
   }
 
-  public function scopeSortByNameAlpha(Builder $query)
+  public function scopeAllowedSorts(Builder $query, string $column)
   {
-    return $query->orderBy('first_name');
+    return $query->orderBy($column);
   }
 
-  public function scopeFilterByCompany(Builder $query)
+  public function scopeAllowedFilters(Builder $query, string $key)
   {
-    if ($company_id = request()->query('company_id')) {
-      $query->where('company_id', $company_id);
+    if ($id = request()->query($key)) {
+      $query->where($key, $id);
+    }
+
+    return $query;
+  }
+
+  public function scopeAllowedSerch(Builder $query, ...$keys)
+  {
+    if ($search = request()->query('search')) {
+      foreach ($keys as $index => $key) {
+        $method = $index === 0 ? 'where' : 'orWhere';
+
+        $query->{$method}($key, 'like', "%{$search}%");
+      }
     }
 
     return $query;
