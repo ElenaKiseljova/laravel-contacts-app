@@ -22,7 +22,7 @@
         <div class="col-md-9">
           <form action="{{ route('user-profile-information.update') }}" method="post">
             @csrf
-            @method('put')
+            @method('PUT')
             <div class="card">
               <div class="card-header card-title">
                 <strong>Edit Profile</strong>
@@ -37,7 +37,7 @@
                       <label for="name">Name</label>
                       <input type="text" name="name" value="{{ old('name', $user->name) }}" id="name"
                         class="form-control @error('name') is-invalid @enderror">
-                      @error('record')
+                      @error('name')
                         <div class="invalid-feedback">
                           {{ $message }}
                         </div>
@@ -47,7 +47,7 @@
                       <label for="email">Email</label>
                       <input type="email" name="email" value="{{ old('email', $user->email) }}" id="email"
                         class="form-control @error('email') is-invalid @enderror">
-                      @error('record')
+                      @error('email')
                         <div class="invalid-feedback">
                           {{ $message }}
                         </div>
@@ -57,7 +57,7 @@
                       <label for="phone">Phone</label>
                       <input type="text" name="phone" value="{{ old('phone', $user->phone) }}" id="phone"
                         class="form-control @error('phone') is-invalid @enderror">
-                      @error('record')
+                      @error('phone')
                         <div class="invalid-feedback">
                           {{ $message }}
                         </div>
@@ -67,7 +67,7 @@
                       <label for="company">Company</label>
                       <input type="text" name="company" value="{{ old('company', $user->company) }}" id="company"
                         class="form-control @error('company') is-invalid @enderror">
-                      @error('record')
+                      @error('company')
                         <div class="invalid-feedback">
                           {{ $message }}
                         </div>
@@ -77,7 +77,7 @@
                       <label for="country">Country</label>
                       <input type="text" name="country" value="{{ old('country', $user->country) }}" id="country"
                         class="form-control @error('country') is-invalid @enderror">
-                      @error('record')
+                      @error('country')
                         <div class="invalid-feedback">
                           {{ $message }}
                         </div>
@@ -86,7 +86,7 @@
                     <div class="form-group">
                       <label for="address">Address</label>
                       <textarea name="address" id="address" rows="2" class="form-control @error('address') is-invalid @enderror">{{ old('address', $user->address) }}</textarea>
-                      @error('record')
+                      @error('address')
                         <div class="invalid-feedback">
                           {{ $message }}
                         </div>
