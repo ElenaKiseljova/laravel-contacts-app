@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactRequest;
 use App\Repositories\CompanyRepository;
 use App\Models\Contact;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -16,21 +13,8 @@ class ContactController extends Controller
     $this->company = $company;
   }
 
-  public function index(Request $request)
+  public function index()
   {
-    // dd(
-    //   Auth::user(),
-    //   Auth::id(),
-    //   auth()->id(),
-    //   $request->user()
-    // );
-
-    // if (Auth::check()) {
-    //   dd('User');
-    // } else {
-    //   dd('Guest');
-    // }
-
     $companies = $this->company->pluck();
 
     // DB::enableQueryLog();
