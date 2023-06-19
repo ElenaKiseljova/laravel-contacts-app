@@ -55,30 +55,20 @@ class ContactController extends Controller
     return redirect()->route('contacts.index')->with('message', 'Contact has been added successfully');
   }
 
-  public function show($id)
+  public function show(Contact $contact)
   {
-    $contact = $this->findContact($id);
-
     return view('contacts.show')->with('contact', $contact);
   }
 
-  public function findContact($id)
+  public function edit(Contact $contact)
   {
-    return Contact::findOrFail($id);;
-  }
-
-  public function edit($id)
-  {
-    $contact = $this->findContact($id);
     $companies = $this->company->pluck();
 
     return view('contacts.edit', compact('contact', 'companies'));
   }
 
-  public function update(Request $request, $id)
+  public function update(Request $request, Contact $contact)
   {
-    $contact = $this->findContact($id);
-
     $request->validate([
       'first_name' => 'required|string|max:50',
       'last_name' => 'required|string|max:50',
@@ -93,9 +83,8 @@ class ContactController extends Controller
     return redirect()->route('contacts.index')->with('message', 'Contact has been updated successfully');
   }
 
-  public function destroy($id)
+  public function destroy(Contact $contact)
   {
-    $contact = $this->findContact($id);
     $contact->delete();
 
     $redirect = request()->query('redirect');
@@ -105,9 +94,8 @@ class ContactController extends Controller
       ->with('undoRoute', $this->getUndoRoute('contacts.restore', $contact));
   }
 
-  public function restore($id)
+  public function restore(Contact $contact)
   {
-    $contact = Contact::onlyTrashed()->findOrFail($id);
     $contact->restore();
 
     return back()
@@ -120,9 +108,8 @@ class ContactController extends Controller
     return request()->missing('undo') ? route($name, [$resource->id, 'undo' => true]) : null;
   }
 
-  public function forceDelete($id)
+  public function forceDelete(Contact $contact)
   {
-    $contact = Contact::onlyTrashed()->findOrFail($id);
     $contact->forceDelete();
 
     return back()

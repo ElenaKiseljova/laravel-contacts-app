@@ -22,6 +22,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', WelcomeController::class);
 
+Route::resource('/contacts', ContactController::class);
+Route::delete('/contacts/{contact}/restore', [ContactController::class, 'restore'])
+  ->name('contacts.restore')
+  ->withTrashed();
+Route::delete('/contacts/{contact}/force-delete', [ContactController::class, 'forceDelete'])
+  ->name('contacts.force-delete')
+  ->withTrashed();
+
+Route::resource('/contacts.notes', ContactNoteController::class)->shallow();
+
+Route::resource('/activities', ActivityController::class)->parameters([
+  'activities' => 'active',
+]);
+
+Route::resources([
+  '/tags' => TagController::class,
+  '/tasks' => TaskController::class
+]);
+
+Route::resource('/companies', CompanyController::class);
+
 // Динамический роут с ОПЦИОНАЛЬНЫМ параметром
 Route::get('/companies/{name?}', function ($name = null) {
   if ($name) {
@@ -30,20 +51,3 @@ Route::get('/companies/{name?}', function ($name = null) {
     return "<h1>All Companies</h1>";
   }
 })->whereAlphaNumeric('name');
-
-Route::resource('/contacts', ContactController::class);
-Route::delete('/contacts/{contact}/restore', [ContactController::class, 'restore'])->name('contacts.restore');
-Route::delete('/contacts/{contact}/force-delete', [ContactController::class, 'forceDelete'])->name('contacts.force-delete');
-
-Route::resource('/companies', CompanyController::class);
-
-Route::resource('/activities', ActivityController::class)->parameters([
-  'activities' => 'active',
-]);
-
-Route::resource('/contacts.notes', ContactNoteController::class)->shallow();
-
-Route::resources([
-  '/tags' => TagController::class,
-  '/tasks' => TaskController::class
-]);
