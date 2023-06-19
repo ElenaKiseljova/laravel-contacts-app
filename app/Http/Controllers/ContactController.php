@@ -57,14 +57,19 @@ class ContactController extends Controller
 
   public function show($id)
   {
-    $contact = Contact::findOrFail($id);
+    $contact = $this->findContact($id);
 
     return view('contacts.show')->with('contact', $contact);
   }
 
+  public function findContact($id)
+  {
+    return Contact::findOrFail($id);;
+  }
+
   public function edit($id)
   {
-    $contact = Contact::findOrFail($id);
+    $contact = $this->findContact($id);
     $companies = $this->company->pluck();
 
     return view('contacts.edit', compact('contact', 'companies'));
@@ -72,7 +77,7 @@ class ContactController extends Controller
 
   public function update(Request $request, $id)
   {
-    $contact = Contact::findOrFail($id);
+    $contact = $this->findContact($id);
 
     $request->validate([
       'first_name' => 'required|string|max:50',
@@ -90,7 +95,7 @@ class ContactController extends Controller
 
   public function destroy($id)
   {
-    $contact = Contact::findOrFail($id);
+    $contact = $this->findContact($id);
     $contact->delete();
 
     $redirect = request()->query('redirect');
