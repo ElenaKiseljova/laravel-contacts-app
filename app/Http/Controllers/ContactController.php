@@ -3,27 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
+use App\Models\Company;
 use App\Repositories\CompanyRepository;
 use App\Models\Contact;
 
 class ContactController extends Controller
 {
-  public function __construct(protected CompanyRepository $company)
+  public function userCompanies()
   {
-    $this->company = $company;
+    return Company::forUser(auth()->user())->orderBy('name')->pluck('name', 'id');
   }
 
   public function index()
   {
-    $companies = $this->company->pluck();
+    $companies = $this->userCompanies();
 
     // DB::enableQueryLog();
+
+    // $contacts = auth()->user()->contacts()
+    //   ->allowedTrash()
+    //   ->allowedSorts(['first_name', 'last_name', 'email'], '-id')
+    //   ->allowedFilters('company_id')
+    //   ->allowedSerch('first_name', 'last_name', 'email')
+    //   ->paginate(10);
 
     $contacts = Contact::allowedTrash()
       ->allowedSorts(['first_name', 'last_name', 'email'], '-id')
       ->allowedFilters('company_id')
       ->allowedSerch('first_name', 'last_name', 'email')
-      ->paginate(10);
+      ->forUser(auth()->user())
+      ->paginate(5);
 
     // dump(DB::getQueryLog());
 
@@ -33,14 +42,14 @@ class ContactController extends Controller
   public function create()
   {
     $contact = new Contact();
-    $companies = $this->company->pluck();
+    $companies = $this->userCompanies();
 
     return view('contacts.create', compact('companies', 'contact'));
   }
 
   public function store(ContactRequest $request)
   {
-    Contact::create($request->input());
+    $request->user()->contacts()->create($request->input());
 
     return redirect()->route('contacts.index')->with('message', 'Contact has been added successfully');
   }
@@ -52,7 +61,7 @@ class ContactController extends Controller
 
   public function edit(Contact $contact)
   {
-    $companies = $this->company->pluck();
+    $companies = $this->userCompanies();
 
     return view('contacts.edit', compact('contact', 'companies'));
   }
