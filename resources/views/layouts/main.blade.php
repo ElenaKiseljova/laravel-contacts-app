@@ -51,7 +51,11 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="profile.html">Settings</a>
-                <a class="dropdown-item" href="#">Logout</a>
+
+                <form class="d-inline" action="{{ route('logout') }}" method="POST">
+                  @csrf
+                  <button class="dropdown-item">Logout</button>
+                </form>
               </div>
             </li>
             {{-- @endif --}}
