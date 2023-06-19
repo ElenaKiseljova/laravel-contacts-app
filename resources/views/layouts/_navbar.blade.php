@@ -26,7 +26,7 @@
                   {{ Auth::user()->name }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="profile.html">Settings</a>
+                  <a class="dropdown-item" href="{{ route('user-profile-information.edit') }}">Profile</a>
 
                   <form class="d-inline" action="{{ route('logout') }}" method="POST">
                     @csrf
