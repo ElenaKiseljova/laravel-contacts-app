@@ -28,4 +28,9 @@ class Company extends Model
       // 'company_id'
     );
   }
+
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
 }
