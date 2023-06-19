@@ -41,18 +41,23 @@ class ContactController extends Controller
 
   public function store(Request $request)
   {
-    $request->validate([
+    $request->validate($this->rules());
+
+    Contact::create($request->input());
+
+    return redirect()->route('contacts.index')->with('message', 'Contact has been added successfully');
+  }
+
+  public function rules()
+  {
+    return [
       'first_name' => 'required|string|max:50',
       'last_name' => 'required|string|max:50',
       'email' => 'required|email',
       'phone' => 'nullable',
       'address' => 'nullable',
       'company_id' => 'required|exists:companies,id',
-    ]);
-
-    Contact::create($request->input());
-
-    return redirect()->route('contacts.index')->with('message', 'Contact has been added successfully');
+    ];
   }
 
   public function show(Contact $contact)
@@ -69,14 +74,7 @@ class ContactController extends Controller
 
   public function update(Request $request, Contact $contact)
   {
-    $request->validate([
-      'first_name' => 'required|string|max:50',
-      'last_name' => 'required|string|max:50',
-      'email' => 'required|email',
-      'phone' => 'nullable',
-      'address' => 'nullable',
-      'company_id' => 'required|exists:companies,id',
-    ]);
+    $request->validate($this->rules());
 
     $contact->update($request->input());
 
