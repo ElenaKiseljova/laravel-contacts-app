@@ -49,7 +49,7 @@ class ContactController extends Controller
 
   public function store(ContactRequest $request)
   {
-    $request->user()->contacts()->create($request->input());
+    $request->user()->contacts()->create($request->validated());
 
     return redirect()->route('contacts.index')->with('message', 'Contact has been added successfully');
   }
@@ -68,7 +68,7 @@ class ContactController extends Controller
 
   public function update(ContactRequest $request, Contact $contact)
   {
-    $contact->update($request->input());
+    $contact->update($request->validated());
 
     return redirect()->route('contacts.index')->with('message', 'Contact has been updated successfully');
   }
@@ -91,11 +91,6 @@ class ContactController extends Controller
     return back()
       ->with('message', 'Contact has been restored from trash.')
       ->with('undoRoute', getUndoRoute('contacts.destroy', $contact));
-  }
-
-  protected function getUndoRoute($name, $resource)
-  {
-    return request()->missing('undo') ? route($name, [$resource->id, 'undo' => true]) : null;
   }
 
   public function forceDelete(Contact $contact)

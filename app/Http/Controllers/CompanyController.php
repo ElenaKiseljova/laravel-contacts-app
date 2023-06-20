@@ -37,8 +37,7 @@ class CompanyController extends Controller
    */
   public function store(CompanyRequest $request)
   {
-    // $request->validated() или $request->input() ?
-    $request->user()->companies()->create($request->input());
+    $request->user()->companies()->create($request->validated());
 
     return redirect()->route('companies.index')->with('message', 'Company has been added successfully');
   }
@@ -64,7 +63,7 @@ class CompanyController extends Controller
    */
   public function update(CompanyRequest $request, Company $company)
   {
-    $company->update($request->input());
+    $company->update($request->validated());
 
     return redirect()->route('companies.index')->with('message', 'Company has been updated successfully');
   }
@@ -86,8 +85,6 @@ class CompanyController extends Controller
   public function restore(Company $company)
   {
     $company->restore();
-
-    $redirect = request()->query('redirect');
 
     return back()
       ->with('message', 'Company has been restored from trash.')
