@@ -2,7 +2,7 @@
   <th scope="row">{{ $companies->firstItem() + $index }}</th>
   <td>{{ $company->name }}</td>
   <td>{{ $company->website }}</td>
-  <td>a{{ $company->email }}</td>
+  <td>{{ $company->email }}</td>
   <td><a href="{{ route('contacts.index', ['company_id' => $company->id]) }}">{{ $company->contacts->count() }}</a></td>
   <td width="150">
     @if ($showTrashButtons)
