@@ -24,13 +24,13 @@ class ContactController extends Controller
     //   ->allowedTrash()
     //   ->allowedSorts(['first_name', 'last_name', 'email'], '-id')
     //   ->allowedFilters('company_id')
-    //   ->allowedSerch('first_name', 'last_name', 'email')
+    //   ->allowedSearch('first_name', 'last_name', 'email')
     //   ->paginate(10);
 
     $contacts = Contact::allowedTrash()
       ->allowedSorts(['first_name', 'last_name', 'email'], '-id')
       ->allowedFilters('company_id')
-      ->allowedSerch('first_name', 'last_name', 'email')
+      ->allowedSearch('first_name', 'last_name', 'email')
       ->forUser(auth()->user())
       ->paginate(10);
 

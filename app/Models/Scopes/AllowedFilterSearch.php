@@ -26,7 +26,7 @@ trait AllowedFilterSearch
     return $query;
   }
 
-  public function scopeAllowedSerch(Builder $query, ...$keys)
+  public function scopeAllowedSearch(Builder $query, ...$keys)
   {
     if ($search = request()->query('search')) {
       foreach ($keys as $index => $key) {

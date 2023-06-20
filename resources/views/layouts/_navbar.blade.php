@@ -10,8 +10,10 @@
         <div class="navbar-collapse collapse" id="navbar-toggler">
           <ul class="navbar-nav">
             @auth
-              <li class="nav-item"><a href="{{ route('companies.index') }}" class="nav-link">Companies</a></li>
-              <li class="nav-item active"><a href="{{ route('contacts.index') }}" class="nav-link">Contacts</a></li>
+              <li class="nav-item @if (request()->routeIs('companies*')) active @endif"><a
+                  href="{{ route('companies.index') }}" class="nav-link">Companies</a></li>
+              <li class="nav-item @if (request()->routeIs('contacts*')) active @endif"><a href="{{ route('contacts.index') }}"
+                  class="nav-link">Contacts</a></li>
             @endauth
           </ul>
 
