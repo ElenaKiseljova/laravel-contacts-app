@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
@@ -58,6 +59,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
       ],
     ])->validate();
 
+    $this->uploadProfilePicture($input);
+
     if (
       $input['email'] !== $user->email &&
       $user instanceof MustVerifyEmail
@@ -71,8 +74,29 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         'country' => $input['country'],
         'company' => $input['company'],
         'address' => $input['address'],
-        // 'profile_picture' => $input['profile_picture'],
+        'profile_picture' => $input['profile_picture'],
       ])->save();
+    }
+  }
+
+  protected function uploadProfilePicture(&$input)
+  {
+    if (request()->hasFile('profile_picture')) {
+      // $fileName = Storage::putFile('profile', $input['profile_picture']);
+      $uploadedFile = $input['profile_picture'];
+
+      // dd(
+      //   $uploadedFile->getClientOriginalName(),
+      //   $uploadedFile->getClientOriginalExtension(),
+      //   $uploadedFile->getClientMimeType(),
+      // );
+      // $fileName = $uploadedFile->store('profile'); // , 's3'
+      $fileName = $uploadedFile->storeAs(
+        'profile',
+        'profile-user-' . request()->user()->id . '.' . $uploadedFile->getClientOriginalExtension()
+      );
+
+      $input['profile_picture'] = $fileName;
     }
   }
 
@@ -90,7 +114,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
       'country' => $input['country'],
       'company' => $input['company'],
       'address' => $input['address'],
-      // 'profile_picture' => $input['profile_picture'],
+      'profile_picture' => $input['profile_picture'],
       'email_verified_at' => null,
     ])->save();
 

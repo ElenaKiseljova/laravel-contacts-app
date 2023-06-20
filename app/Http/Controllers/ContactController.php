@@ -32,7 +32,7 @@ class ContactController extends Controller
       ->allowedFilters('company_id')
       ->allowedSerch('first_name', 'last_name', 'email')
       ->forUser(auth()->user())
-      ->paginate(5);
+      ->paginate(10);
 
     // dump(DB::getQueryLog());
 
