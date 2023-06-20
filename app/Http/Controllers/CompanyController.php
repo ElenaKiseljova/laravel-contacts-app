@@ -46,9 +46,9 @@ class CompanyController extends Controller
   /**
    * Display the specified resource.
    */
-  public function show(string $id)
+  public function show(Company $company)
   {
-    //
+    return view('companies.show', compact('company'));
   }
 
   /**
@@ -72,7 +72,7 @@ class CompanyController extends Controller
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(string $id)
+  public function destroy(Company $company)
   {
     //
   }
