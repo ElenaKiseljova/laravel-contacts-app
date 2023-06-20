@@ -23,22 +23,9 @@
               </div>
             </div>
             <div class="card-body">
-              {{-- @include('companies._filter') --}}
+              @include('shared.filter')
 
-              @if ($message = session('message'))
-                <div class="alert alert-success">
-                  {{ $message }}
-
-                  @if ($undoRoute = session('undoRoute'))
-                    <form action="{{ $undoRoute }}" method="POST" class="d-inline">
-                      @csrf
-                      @method('delete')
-
-                      <button class="btn alert-link">Undo</button>
-                    </form>
-                  @endif
-                </div>
-              @endif
+              @include('shared.flash')
 
               <table class="table-striped table-hover table">
                 <thead>
@@ -68,7 +55,10 @@
                   @forelse ($companies as $index => $company)
                     @include('companies._company', ['contact' => $company, 'index' => $index])
                   @empty
-                    @include('companies._empty')
+                    @include('shared.empty', [
+                        'numCol' => 6,
+                        'message' => 'No companies found',
+                    ])
                   @endforelse
                 </tbody>
               </table>

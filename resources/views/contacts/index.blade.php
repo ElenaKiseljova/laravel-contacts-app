@@ -23,22 +23,10 @@
               </div>
             </div>
             <div class="card-body">
-              @include('contacts._filter')
-
-              @if ($message = session('message'))
-                <div class="alert alert-success">
-                  {{ $message }}
-
-                  @if ($undoRoute = session('undoRoute'))
-                    <form action="{{ $undoRoute }}" method="POST" class="d-inline">
-                      @csrf
-                      @method('delete')
-
-                      <button class="btn alert-link">Undo</button>
-                    </form>
-                  @endif
-                </div>
-              @endif
+              @include('shared.filter', [
+                  'filterDropdown' => 'contacts._company-selection',
+              ])
+              @include('shared.flash')
 
               <table class="table-striped table-hover table">
                 <thead>
@@ -68,7 +56,10 @@
                   @forelse ($contacts as $index => $contact)
                     @include('contacts._contact', ['contact' => $contact, 'index' => $index])
                   @empty
-                    @include('contacts._empty')
+                    @include('shared.empty', [
+                        'numCol' => 6,
+                        'message' => 'No contacts found',
+                    ])
                   @endforelse
                 </tbody>
               </table>

@@ -6,30 +6,22 @@
   <td><a href="{{ route('contacts.index', ['company_id' => $company->id]) }}">{{ $company->contacts->count() }}</a></td>
   <td width="150">
     @if ($showTrashButtons)
-      <form class="d-inline" action="{{ route('companies.restore', $company->id) }}" method="POST">
-        @csrf
-        @method('delete')
-        <button type="submit" class="btn btn-sm btn-circle btn-outline-info" title="Restore"><i
-            class="fa fa-undo"></i></button>
-      </form>
-      <form class="d-inline" action="{{ route('companies.force-delete', $company->id) }}" method="POST"
-        onsubmit="return confirm('Your data will be remowed permanently. Are you sure?')">
-        @csrf
-        @method('delete')
-        <button type="submit" class="btn btn-sm btn-circle btn-outline-danger" title="Delete permanently"><i
-            class="fa fa-times"></i></button>
-      </form>
+      @include('shared.buttons.restore', [
+          'action' => route('companies.restore', $company->id),
+      ])
+
+      @include('shared.buttons.force-delete', [
+          'action' => route('companies.force-delete', $company->id),
+      ])
     @else
       <a href="{{ route('companies.show', $company->id) }}" class="btn btn-sm btn-circle btn-outline-info"
         title="Show"><i class="fa fa-eye"></i></a>
       <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-sm btn-circle btn-outline-secondary"
         title="Edit"><i class="fa fa-edit"></i></a>
-      <form class="d-inline" action="{{ route('companies.destroy', $company->id) }}" method="POST">
-        @csrf
-        @method('delete')
-        <button type="submit" class="btn btn-sm btn-circle btn-outline-danger" title="Delete"><i
-            class="fa fa-trash"></i></button>
-      </form>
+
+      @include('shared.buttons.destroy', [
+          'action' => route('companies.destroy', $company->id),
+      ])
     @endif
   </td>
 </tr>
