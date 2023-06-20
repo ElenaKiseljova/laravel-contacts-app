@@ -80,8 +80,8 @@ class ContactController extends Controller
     $redirect = request()->query('redirect');
 
     return ($redirect ? redirect()->route($redirect) : back())
-      ->with('message', 'Contact has been moved to trash')
-      ->with('undoRoute', $this->getUndoRoute('contacts.restore', $contact));
+      ->with('message', 'Contact has been moved to trash.')
+      ->with('undoRoute', getUndoRoute('contacts.restore', $contact));
   }
 
   public function restore(Contact $contact)
@@ -90,7 +90,7 @@ class ContactController extends Controller
 
     return back()
       ->with('message', 'Contact has been restored from trash.')
-      ->with('undoRoute', $this->getUndoRoute('contacts.destroy', $contact));
+      ->with('undoRoute', getUndoRoute('contacts.destroy', $contact));
   }
 
   protected function getUndoRoute($name, $resource)

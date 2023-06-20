@@ -50,6 +50,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
   ]);
 
   Route::resource('/companies', CompanyController::class);
+  Route::delete('/companies/{company}/restore', [CompanyController::class, 'restore'])
+    ->name('companies.restore')
+    ->withTrashed();
+  Route::delete('/companies/{company}/force-delete', [CompanyController::class, 'forceDelete'])
+    ->name('companies.force-delete')
+    ->withTrashed();
 
   // Динамический роут с ОПЦИОНАЛЬНЫМ параметром
   Route::get('/companies/{name?}', function ($name = null) {

@@ -74,6 +74,31 @@ class CompanyController extends Controller
    */
   public function destroy(Company $company)
   {
-    //
+    $company->delete();
+
+    $redirect = request()->query('redirect');
+
+    return ($redirect ? redirect()->route($redirect) : back())
+      ->with('message', 'Company has been moved to trash')
+      ->with('undoRoute', getUndoRoute('companies.restore', $company));
+  }
+
+  public function restore(Company $company)
+  {
+    $company->restore();
+
+    $redirect = request()->query('redirect');
+
+    return back()
+      ->with('message', 'Company has been restored from trash.')
+      ->with('undoRoute', getUndoRoute('companies.destroy', $company));
+  }
+
+  public function forceDelete(Company $company)
+  {
+    $company->forceDelete();
+
+    return back()
+      ->with('message', 'Company has been remover permanently.');
   }
 }
