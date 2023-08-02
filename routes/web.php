@@ -70,6 +70,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Route::get('/dashboard', DashboardController::class)->middleware(['auth']);
 
+// Eager loading
 Route::get('/eagerload-multiple', function () {
   // Default
   // $users = User::get();
@@ -80,5 +81,23 @@ Route::get('/eagerload-multiple', function () {
   foreach ($users as $key => $user) {
     echo $user->name . ': ';
     echo $user->companies->count() . ' companies, ' . $user->contacts->count() . ' contacts <br /><br />';
+  }
+});
+
+Route::get('/eagerload-nested', function () {
+  // Default
+  // $users = User::get();
+
+  // Eager
+  $users = User::with(['companies', 'companies.contacts'])->get();
+
+  foreach ($users as $key => $user) {
+    echo '<b>' . $user->name  . '</b>' . '<br />';
+
+    foreach ($user->companies as $key => $company) {
+      echo $company->name . '<b> has </b>' . $company->contacts->count() . ' contacts <br />';
+    }
+
+    echo '<br /><br />';
   }
 });
