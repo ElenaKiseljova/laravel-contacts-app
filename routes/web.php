@@ -144,3 +144,26 @@ Route::get('/eagerload-lazy', function () {
     echo '<br /><br />';
   }
 });
+
+Route::get('/eagerload-default', function () {
+  // Default
+  // $users = User::get();
+
+  // Иногда при дефолтной установке Eager - получаются ненужные загрузки.
+  // Как в данном случае, если нижний фразмент закомментирован:
+  // подгрузка компаний и контактов всё равно происходит.
+  // Для избежания этого, используется такой запрос:
+  $users = User::without('contacts', 'companies')->get();
+
+  foreach ($users as $key => $user) {
+    echo '<b>' . $user->name  . '</b>' . '<br />';
+
+
+
+    // foreach ($user->companies as $key => $company) {
+    //   echo $company->email . '<br />';
+    // }
+
+    // echo '<br /><br />';
+  }
+});

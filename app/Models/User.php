@@ -50,6 +50,9 @@ class User extends Authenticatable implements MustVerifyEmail
     'email_verified_at' => 'datetime',
   ];
 
+  // Задание по дефолту Eager loading для компаний и контактов
+  protected $with = ['contacts', 'companies'];
+
   public function companies()
   {
     return $this->hasMany(Company::class);
