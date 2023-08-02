@@ -17,6 +17,7 @@ class CompanyController extends Controller
       ->allowedSorts(['name', 'website', 'email'], '-id')
       ->allowedSearch('name', 'website', 'email')
       ->forUser(auth()->user())
+      ->with('contacts') // Сокращает количество запросов засчет объединения их
       ->paginate(5);
 
     return view('companies.index', compact('companies'));
