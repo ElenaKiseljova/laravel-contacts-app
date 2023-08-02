@@ -250,3 +250,24 @@ Route::get('/count-models-select', function () {
     echo '<br /><br />';
   }
 });
+
+Route::get('/count-models-lazy', function () {
+  // Default
+  $users = User::get();
+
+  // Eager
+  // $users->loadCount('companies');
+
+  $users->loadCount(['companies' => function ($query) {
+    $query->where('email', 'like', '%@gmail.com');
+  }]);
+
+  foreach ($users as $key => $user) {
+    echo '<b>' . $user->name  . '</b>' . '<br />';
+
+    // Eager
+    echo '<b>' . $user->companies_count  . '</b>' . ' companies <br />';
+
+    echo '<br /><br />';
+  }
+});
