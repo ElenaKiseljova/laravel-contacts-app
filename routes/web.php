@@ -10,6 +10,7 @@ use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\WelcomeController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,3 +69,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // Route::get('/dashboard', DashboardController::class)->middleware(['auth']);
+
+Route::get('/eagerload-multiple', function () {
+  // Default
+  // $users = User::get();
+
+  // Eager
+  $users = User::with(['companies', 'contacts'])->get();
+
+  foreach ($users as $key => $user) {
+    echo $user->name . ': ';
+    echo $user->companies->count() . ' companies, ' . $user->contacts->count() . ' contacts <br /><br />';
+  }
+});
