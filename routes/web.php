@@ -121,3 +121,26 @@ Route::get('/eagerload-constraint', function () {
     echo '<br /><br />';
   }
 });
+
+Route::get('/eagerload-lazy', function () {
+  // Default
+  $users = User::get();
+
+  // Eager
+  // $users->load('companies');
+
+  // Eager with constraint
+  $users->load(['companies' => function ($query) {
+    $query->orderBy('name');
+  }]);
+
+  foreach ($users as $key => $user) {
+    echo '<b>' . $user->name  . '</b>' . '<br />';
+
+    foreach ($user->companies as $key => $company) {
+      echo $company->name . '<br />';
+    }
+
+    echo '<br /><br />';
+  }
+});
