@@ -202,3 +202,27 @@ Route::get('/count-models', function () {
     echo '<br /><br />';
   }
 });
+
+Route::get('/count-models-constraint', function () {
+  // Default
+  // $users = User::get();
+
+  // Eager
+  $users = User::withCount(['companies' => function ($query) {
+    $query->where('email', 'like', '%@gmail.com');
+  }, 'contacts'])->get();
+
+  foreach ($users as $key => $user) {
+    echo '<b>' . $user->name  . '</b>' . '<br />';
+
+    // Default
+    // echo '<b>' . $user->companies->count()  . '</b>' . ' companies <br />';
+    // echo '<b>' . $user->contacts->count()  . '</b>' . ' contacts <br />';
+
+    // Eager
+    echo '<b>' . $user->companies_count  . '</b>' . ' companies <br />';
+    echo '<b>' . $user->contacts_count  . '</b>' . ' contacts <br />';
+
+    echo '<br /><br />';
+  }
+});
