@@ -25,8 +25,8 @@ class AppServiceProvider extends ServiceProvider
     Paginator::useBootstrapFour();
 
     // Запись лога, если в .env APP_DEBUG = true
-    if (config('app.debug')) {
-      DB::listen(fn ($query) => Log::info($query->sql, $query->bindings, $query->time));
-    }
+    // if (config('app.debug')) {
+    //   DB::listen(fn ($query) => Log::info($query->sql, $query->bindings, $query->time));
+    // }
   }
 }
