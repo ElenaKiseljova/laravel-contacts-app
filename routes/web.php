@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', WelcomeController::class);
 
 Route::middleware(['auth', 'verified'])->group(function () {
-  Route::get('/dashboard', DashboardController::class);
+  Route::get('/dashboard', DashboardController::class)->name('dashboard');;
   Route::get('/settings/profile-information', ProfileController::class)->name('user-profile-information.edit');
   Route::get('/settings/password', PasswordController::class)->name('user-password.edit');
 
