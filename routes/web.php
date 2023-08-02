@@ -101,3 +101,23 @@ Route::get('/eagerload-nested', function () {
     echo '<br /><br />';
   }
 });
+
+Route::get('/eagerload-constraint', function () {
+  // Default
+  // $users = User::get();
+
+  // Eager
+  $users = User::with(['companies' => function ($query) {
+    $query->where('email', 'like', '%.org');
+  }])->get();
+
+  foreach ($users as $key => $user) {
+    echo '<b>' . $user->name  . '</b>' . '<br />';
+
+    foreach ($user->companies as $key => $company) {
+      echo $company->email . '<br />';
+    }
+
+    echo '<br /><br />';
+  }
+});
