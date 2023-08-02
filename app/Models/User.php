@@ -51,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
   ];
 
   // Задание по дефолту Eager loading для компаний и контактов
-  protected $with = ['contacts', 'companies'];
+  // protected $with = ['contacts', 'companies'];
 
   public function companies()
   {

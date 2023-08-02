@@ -167,3 +167,38 @@ Route::get('/eagerload-default', function () {
     // echo '<br /><br />';
   }
 });
+
+// Counting related models
+Route::get('/count-models', function () {
+  // Default
+  // $users = User::get();
+
+  // Eager
+  // $users = User::withCount(['companies', 'contacts'])->get();
+
+  // В attributes добавятся 2 параметра с кол-вом:
+  // companies_count
+  // contacts_count
+  // dd($users);
+
+  // Eager with custom name for new atributes
+  $users = User::withCount(['companies as company_numbers', 'contacts as contact_numbers'])->get();
+
+  foreach ($users as $key => $user) {
+    echo '<b>' . $user->name  . '</b>' . '<br />';
+
+    // Default
+    // echo '<b>' . $user->companies->count()  . '</b>' . ' companies <br />';
+    // echo '<b>' . $user->contacts->count()  . '</b>' . ' contacts <br />';
+
+    // Eager
+    // echo '<b>' . $user->companies_count  . '</b>' . ' companies <br />';
+    // echo '<b>' . $user->contacts_count  . '</b>' . ' contacts <br />';
+
+    // Eager with custom name for new parameters
+    echo '<b>' . $user->company_numbers  . '</b>' . ' companies <br />';
+    echo '<b>' . $user->contact_numbers  . '</b>' . ' contacts <br />';
+
+    echo '<br /><br />';
+  }
+});
