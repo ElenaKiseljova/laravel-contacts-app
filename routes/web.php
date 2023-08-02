@@ -226,3 +226,27 @@ Route::get('/count-models-constraint', function () {
     echo '<br /><br />';
   }
 });
+
+Route::get('/count-models-select', function () {
+  // Default
+  // $users = User::get();
+
+  // Eager
+  $users = User::select(['name', 'email'])->withCount(['companies', 'contacts'])->get();
+
+  // dd($users);
+
+  foreach ($users as $key => $user) {
+    echo '<b>' . $user->name  . '</b>' . '<br />';
+
+    // Default
+    // echo '<b>' . $user->companies->count()  . '</b>' . ' companies <br />';
+    // echo '<b>' . $user->contacts->count()  . '</b>' . ' contacts <br />';
+
+    // Eager
+    echo '<b>' . $user->companies_count  . '</b>' . ' companies <br />';
+    echo '<b>' . $user->contacts_count  . '</b>' . ' contacts <br />';
+
+    echo '<br /><br />';
+  }
+});
