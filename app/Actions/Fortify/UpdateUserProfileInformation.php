@@ -97,6 +97,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
       );
 
       $input['profile_picture'] = $fileName;
+    } else {
+      $input['profile_picture'] = request()->user()->profile_picture;
     }
   }
 
