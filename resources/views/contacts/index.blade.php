@@ -17,6 +17,8 @@
                   @endif
                 </h2>
                 <div class="ml-auto">
+                  <a href="{{ route('contacts.import.create') }}" class="btn btn-info"><i class="fa fa-upload"></i>
+                    Import</a>
                   <a href="{{ route('contacts.create') }}" class="btn btn-success"><i class="fa fa-plus-circle"></i> Add
                     New</a>
                 </div>
@@ -36,14 +38,12 @@
                       {!! sortable('First Name') !!}
                     </th>
                     <th scope="col">
-                      <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'first_name']) }}">
-                        {!! sortable('Last Name') !!}
-                      </a>
+                      {!! sortable('Last Name') !!}
+
                     </th>
                     <th scope="col">
-                      <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'first_name']) }}">
-                        {!! sortable('Email') !!}
-                      </a>
+                      {!! sortable('Email') !!}
+
                     </th>
                     <th scope="col">Company</th>
                     <th scope="col">Actions</th>
