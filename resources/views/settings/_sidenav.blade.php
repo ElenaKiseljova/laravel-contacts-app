@@ -10,7 +10,8 @@
         class="list-group-item list-group-item-action @if (request()->routeIs('user-password.edit')) active @endif">Password</span></a>
       <a href="{{ route('contacts.import.create') }}" class="list-group-item list-group-item-action">Import
         Contacts</span></a>
-      <a href="#" class="list-group-item list-group-item-action">Export Contacts</span></a>
+      <a href="{{ route('contacts.export.create') }}" class="list-group-item list-group-item-action">Export
+        Contacts</span></a>
     </div>
   </div>
 </div><!-- /.col-md-3 -->

@@ -5,6 +5,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactNoteController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExportContactController;
 use App\Http\Controllers\ImportContactController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
@@ -38,6 +39,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
   Route::get('/contacts/import', [ImportContactController::class, 'create'])->name('contacts.import.create');
   Route::post('/contacts/import', [ImportContactController::class, 'store'])->name('contacts.import.store');
+
+  Route::get('/contacts/export', [ExportContactController::class, 'create'])->name('contacts.export.create');
+  Route::post('/contacts/export', [ExportContactController::class, 'store'])->name('contacts.export.store');
 
   Route::resource('/contacts', ContactController::class);
   Route::delete('/contacts/{contact}/restore', [ContactController::class, 'restore'])
